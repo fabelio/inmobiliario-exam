@@ -1,0 +1,52 @@
+services:
+  database:
+    image: mysql:latest
+    container_name: inmobiliario-mysql-db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=inmobiliario
+      - MYSQL_ROOT_PASSWORD=inmobiliario2025
+    ports:
+      - "3308:3306"
+    expose:
+      - "3306"
+    networks:
+      - backend-network
+    volumes:
+      - ./data-base/inmobiliario-db.sql:/docker-entrypoint-initdb.d/init.sql
+  product:
+    image: product-management-inmobiliario
+    container_name: product-management-inmobiliario-container
+    build:
+      context: ./products-management
+    ports:
+      - "8081:8081"
+    depends_on:
+      - database
+    networks:
+      - backend-network
+  orders:
+    image: order-management-inmobiliario
+    container_name: order-management-inmobiliario-container
+    build:
+      context: ./orders-management
+    ports:
+      - "8082:8082"
+    depends_on:
+      - database
+    networks:
+      - backend-network
+  payment:
+    image: payment-management-inmobiliario
+    container_name: payment-management-inmobiliario-container
+    build:
+      context: ./payment-management
+    ports:
+      - "8083:8083"
+    depends_on:
+      - database
+    networks:
+      - backend-network
+      
+networks:
+  backend-network:
