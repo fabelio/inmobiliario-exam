@@ -8,10 +8,8 @@ services:
       - MYSQL_ROOT_PASSWORD=inmobiliario2025
     ports:
       - "3308:3306"
-    expose:
-      - "3306"
     networks:
-      - backend-network
+      - inmobiliario
     volumes:
       - ./data-base/inmobiliario-db.sql:/docker-entrypoint-initdb.d/init.sql
   product:
@@ -24,7 +22,7 @@ services:
     depends_on:
       - database
     networks:
-      - backend-network
+      - inmobiliario
   orders:
     image: order-management-inmobiliario
     container_name: order-management-inmobiliario-container
@@ -35,7 +33,7 @@ services:
     depends_on:
       - database
     networks:
-      - backend-network
+      - inmobiliario
   payment:
     image: payment-management-inmobiliario
     container_name: payment-management-inmobiliario-container
@@ -46,7 +44,7 @@ services:
     depends_on:
       - database
     networks:
-      - backend-network
+      - inmobiliario
       
 networks:
-  backend-network:
+  inmobiliario:
