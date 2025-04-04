@@ -8,4 +8,5 @@ Para ejecutar el proyecto se debe contar con :
 
 Se deben ejecutar los siguientes comandos
 1. levantar contenedores docker con los servicios de base de datos, payment api, order api y products api
+   
     docker-compose up --no-deps --build --force-recreate
